@@ -41,13 +41,4 @@ export class JexiaDataService {
 
  }
 
-
-
- filterRecords(teacherobj: any) {
-   let filterCondition = field("location").isEqualTo(teacherobj.location)
-   this.teacherdataset.select().where(filterCondition).execute().then((data) => {
-
-   })
- }
-
 }
