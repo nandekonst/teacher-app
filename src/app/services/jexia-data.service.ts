@@ -21,24 +21,15 @@ export class JexiaDataService {
   //subscribe to the current Message
   currentMessage: Observable<ITeacher> = this.teacherSource.asObservable();
 
+ constructor(public dataOperations: DataOperations) {   }
 
-  constructor(public dataOperations: DataOperations) {   }
-
- 
- fetchNearestTeachers(teacherobj: any[]):  Promise<Array<any>>{
-   let filterCondition = field("location").isEqualTo(teacherobj)
-   return this.teacherdataset.select().where(filterCondition).execute()
- }
 
  updateTeachers(teacherobj: any): void {
   let filterCondition = field("location").isEqualTo(teacherobj.city)
   let filteredTeachers = this.teacherdataset.select().where(filterCondition).execute().then(data => {
-    //send out the messagestream
+    //sending out the messagestream
     this.teacherSource.next(data)
   });
-
-
-
  }
 
 }
