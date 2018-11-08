@@ -4,7 +4,7 @@ import { Dataset } from 'jexia-sdk-js/api/dataops/dataset';
 import { DataOperations } from '@jexia/ng-jexia';
 import { field } from 'jexia-sdk-js/api/dataops/filteringApi';
 import { ITeacher } from '../interfaces/ITeacher';
-import { Observable, BehaviorSubject, from } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -13,23 +13,28 @@ import { Observable, BehaviorSubject, from } from 'rxjs';
 export class JexiaDataService {
   //create a property from type Dataset with ITeacher interface and set it dataset teachers
   teacherdataset: Dataset<ITeacher> = this.dataOperations.dataset<ITeacher>('teachers');
-
   //select it and execute it 
   teachers: Promise<ITeacher[]> = this.teacherdataset.select().execute();
   //initalize behaviorsubject
   teacherSource: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   //subscribe to the current Message
-  currentMessage: Observable<ITeacher> = this.teacherSource.asObservable();
+  currentMessage: Observable<ITeacher[]> = this.teacherSource.asObservable();
 
  constructor(public dataOperations: DataOperations) {   }
 
-
  updateTeachers(teacherobj: any): void {
-  let filterCondition = field("location").isEqualTo(teacherobj.city)
-  let filteredTeachers = this.teacherdataset.select().where(filterCondition).execute().then(data => {
-    //sending out the messagestream
-    this.teacherSource.next(data)
-  });
+  
+    let filterCondition = field("location").isEqualTo(teacherobj.city)
+    let filteredTeachers = this.teacherdataset.select().where(filterCondition).execute().then(data => {
+      //sending out the messagestream
+      this.teacherSource.next(data);
+    });
+   
+ }
+ getAllTeachers(){
+   this.teachers.then(data => {
+     this.teacherSource.next(data);
+   })
  }
 
 }

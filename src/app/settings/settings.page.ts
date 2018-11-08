@@ -31,18 +31,33 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
   }
 
-
   async saveSettings(){
     let location = {
       city: this.city,
     }
-    this.storage.set('location', JSON.stringify(location));
-    this.jexiaDataService.updateTeachers(location);
-    const toast = await this.toastController.create({
-      message: 'Your settings have been saved.',
-      duration: 2000
-    });
-    toast.present();  
+
+    if(location.city == ""){
+      this.storage.clear();
+      this.jexiaDataService.getAllTeachers();
+      const toast = await this.toastController.create({
+        message: 'Your settings have been saved to default.',
+        duration: 2000
+      });
+      toast.present();  
+    } else {
+      this.jexiaDataService.updateTeachers(location);
+      this.storage.set('location', JSON.stringify(location));
+      console.log("LOCATION" + JSON.stringify(location.city))
+      
+      const toast = await this.toastController.create({
+        message: 'Your settings have been saved.',
+        duration: 2000
+      });
+      toast.present();  
+    }
+   
   }
+
+ 
 
 }

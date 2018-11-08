@@ -7,49 +7,7 @@
 <ion-content padding class="home">
    
   <ion-grid >
-
-    <div class="all-teachers" *ngIf="!currentTeachers" >
-        <ion-card *ngFor="let teacher of teachersArray">
-            <ion-item>
-                <ion-card-title>{{teacher.name}}</ion-card-title>
-                <ion-button fill="outline" slot="end">View</ion-button>
-            </ion-item>
-          
-            <ion-card-content>
-                    <ion-item>
-                      <ion-icon name="pin" slot="start"></ion-icon>
-                      <ion-label> {{teacher.location}} </ion-label>
-                    </ion-item>
-                    <ion-item>
-                       <ion-icon name="ios-cube" slot="start"></ion-icon>
-                      <ion-label>
-                        <strong>Subject: </strong> {{teacher.subject}}
-                      </ion-label>
-                    </ion-item>
-                    <ion-item>
-                      <ion-icon name="logo-euro" slot="start"></ion-icon>
-                      <ion-label>
-                          <strong>Price: </strong> {{teacher.price}}
-                      </ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-icon name="ios-paper" slot="start"></ion-icon>
-                          <ion-label>
-                              <strong>Experience: </strong> {{teacher.yrs_of_exp}}
-                          </ion-label>
-                        </ion-item>
-                    <ion-item>
-                      <ion-icon name="ios-clock" slot="start"></ion-icon>
-                        <ion-label>
-                            <strong>Available: </strong> {{teacher.available}}
-                        </ion-label>
-                      </ion-item>
-            </ion-card-content>
-          </ion-card>
-
-    </div>
     
-
         <div class="current-teachers" *ngIf="currentTeachers">
           <ion-card  *ngFor="let teacher of currentTeachers">
             <ion-item>
@@ -88,7 +46,7 @@
                       </ion-item>
             </ion-card-content>
           </ion-card>
-          <p *ngIf="currentTeachers == 0" >There are no teachers in this region</p>
+           <p *ngIf="currentTeachers == 0" >There are no teachers in this region</p>
 
         </div>
         

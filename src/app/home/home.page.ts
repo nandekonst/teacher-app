@@ -9,44 +9,37 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
-  teachersArray:ITeacher[];
-  filteredRecords: ITeacher[];
   location: Object;
-  currentTeachers: ITeacher;
+  currentTeachers: ITeacher[];
 
   constructor(private jexiaDataService: JexiaDataService, private storage: Storage) {}
 
   ngOnInit(){
-    this.showNearestTeacher();
-    this.showAllTeachers();
-  
-  }
-
-  showAllTeachers(){
-    this.jexiaDataService.teachers.then(data => {
-      this.teachersArray = data;
-    })
+    this.showNearestTeacher();  
   }
 
   showNearestTeacher(){
+    
     this.jexiaDataService.currentMessage.subscribe(message => this.currentTeachers = message)
-
-    //check if there is a value in local storage
+   
+        //check if there is a value in local storage
     this.storage.get('location').then((val) => {
-      if(val != undefined){
-        this.location = JSON.parse(val);
-        this.jexiaDataService.updateTeachers(this.location)
+       //if the currentTeachers has not yet been filled, use the entire dataset with records
+    if((this.currentTeachers == null) && (val == undefined)) {
+      this.jexiaDataService.getAllTeachers();
+      
+    } else {
+      this.location = JSON.parse(val);
+      this.jexiaDataService.updateTeachers(this.location)
 
-      } else {
-        //take current location from phone;
-        //checkout Geolocation
-        
-      }
+    }  
 
-     
+ })
 
-    })
-  }
+    
+
+  
+ }
 
   
 }
