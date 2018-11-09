@@ -19,27 +19,19 @@ export class HomePage implements OnInit {
   }
 
   showNearestTeacher(){
-    
     this.jexiaDataService.currentMessage.subscribe(message => this.currentTeachers = message)
-   
-        //check if there is a value in local storage
+    //check if there is a value in local storage
     this.storage.get('location').then((val) => {
-       //if the currentTeachers has not yet been filled, use the entire dataset with records
+    //if the currentTeachers has not yet been filled, use the entire dataset with records
     if((this.currentTeachers == null) && (val == undefined)) {
-      this.jexiaDataService.getAllTeachers();
-      
+      this.jexiaDataService.getAllTeachers();  
     } else {
       this.location = JSON.parse(val);
       this.jexiaDataService.updateTeachers(this.location)
-
     }  
 
- })
-
-    
-
+  })
   
  }
-
   
 }
